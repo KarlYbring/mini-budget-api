@@ -73,11 +73,10 @@ using (var scope = app.Services.CreateScope())
     }
     db.SaveChanges();
 }
-
-app.MapOpenApi();
-app.UseCors();
-app.UseHttpsRedirection();
+app.UseCors(); 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpsRedirection();
 app.MapControllers();
+app.MapOpenApi();
 app.Run();

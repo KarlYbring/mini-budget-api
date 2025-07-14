@@ -14,6 +14,7 @@ public class CategoryController : ControllerBase
         _context = context;
     }
 
+
     [HttpPost]
     public async Task<ActionResult<Category>> Create(Category category)
     {
@@ -33,5 +34,30 @@ public class CategoryController : ControllerBase
     public async Task<ActionResult<IEnumerable<Category>>> GetAll()
     {
         return Ok(await _context.Categories.ToListAsync());
+    }
+
+    [HttpPost("fix-names")]
+    public async Task<IActionResult> FixCategoryNames()
+    {
+        var fixedAny = false;
+
+        var klader = await _context.Categories.FirstOrDefaultAsync(c => c.Name.Contains("Kl�der"));
+        if (klader != null)
+        {
+            klader.Name = "Kläder";
+            fixedAny = true;
+        }
+
+        var nojen = await _context.Categories.FirstOrDefaultAsync(c => c.Name.Contains("N�jen"));
+        if (nojen != null)
+        {
+            nojen.Name = "Nöjen";
+            fixedAny = true;
+        }
+
+        if (fixedAny)
+            await _context.SaveChangesAsync();
+
+        return Ok("Kategorinamn fixade!");
     }
 }
