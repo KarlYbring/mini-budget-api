@@ -58,9 +58,24 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DataContext>();
     db.Database.Migrate();
+
+    // Seed default categories if they don't exist
+    var defaultCategories = new[]
+    {
+        "Mat", "Transport", "Abonnemang", "Nöjen", "Kläder", "Annat", "Hyra"
+    };
+
+    foreach (var name in defaultCategories)
+    {
+        if (!db.Categories.Any(c => c.Name == name))
+        {
+            db.Categories.Add(new MiniBudgetApp.Models.Category { Name = name });
+        }
+    }
+    db.SaveChanges();
 }
 
-    app.MapOpenApi();
+app.MapOpenApi();
 app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
