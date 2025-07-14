@@ -28,8 +28,7 @@ builder.Services.AddCors(options =>
         policy
             .WithOrigins("https://minibudget.netlify.app")
             .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
+            .AllowAnyMethod();
     });
 });
 
