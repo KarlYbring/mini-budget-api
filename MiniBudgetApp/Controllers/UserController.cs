@@ -29,7 +29,7 @@ namespace MiniBudgetApp.Controllers
             var result = await _userService.RegisterAsync(user, req.Password);
             if (result == null)
                 return BadRequest("E-postadressen är redan registrerad.");
-            return Ok();
+            return Ok(new { message = "Registrering lyckades." });
         }
 
         [HttpPost("login")]
