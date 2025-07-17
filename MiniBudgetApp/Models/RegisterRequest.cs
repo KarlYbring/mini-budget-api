@@ -1,6 +1,5 @@
 ﻿namespace MiniBudgetApp.Models
 {
-    // Request-modeller
     public class RegisterRequest
     {
         public string FirstName { get; set; } = null!;
