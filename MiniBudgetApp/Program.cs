@@ -66,13 +66,12 @@ using (var scope = app.Services.CreateScope())
 
     foreach (var name in defaultCategories)
     {
-        if (!db.Categories.Any(c => c.Name.Equals(name, StringComparison.Ordinal)))
+        if (!db.Categories.Any(c => c.Name == name))
         {
             db.Categories.Add(new MiniBudgetApp.Models.Category { Name = name });
         }
     }
     db.SaveChanges();
-
 }
 app.UseCors(); 
 app.UseAuthentication();
