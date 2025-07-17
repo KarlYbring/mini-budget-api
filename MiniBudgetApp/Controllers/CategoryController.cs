@@ -18,12 +18,6 @@ public class CategoryController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Category>> Create(Category category)
     {
-
-        if(!System.Text.RegularExpressions.Regex.IsMatch(category.Name, @"^[a-zA-ZåäöÅÄÖ0-9\s\-]+$"))
-        {
-            return BadRequest("Category name can only contain alphanumeric characters and spaces.");
-        }
-
         var exists = await _context.Categories.AnyAsync(c => c.Name.ToLower() == category.Name.ToLower());
 
         if (exists)
